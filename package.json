@@ -1,10 +1,21 @@
 {
-  "name": "JoyAtWork",
+  "name": "joyatwork",
   "version": "1.0.0",
   "description": "High-fidelity employee celebrations, anniversaries, and moments card system with cross-framework Web Component wrappers.",
+  "homepage": "https://github.com/naveenraj06/joyatwork",
   "main": "./dist/react/index.umd.cjs",
   "module": "./dist/react/index.js",
   "types": "./dist/types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naveenraj06/joyatwork.git"
+  },
+  "bugs": {
+    "url": "https://github.com/naveenraj06/joyatwork/issues"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
