@@ -1,0 +1,3 @@
+# Exclude sourcemaps from the npm package
+dist/**/*.map
+**/*.map

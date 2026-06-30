@@ -21,7 +21,9 @@
     "./style.css": "./dist/react/index.css"
   },
   "files": [
-    "dist"
+    "dist/react",
+    "dist/wc",
+    "dist/types"
   ],
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
