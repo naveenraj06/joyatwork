@@ -7,6 +7,7 @@ import {
   UserPlus, Volume2, Maximize2, Briefcase, Star, ArrowRight, BookOpen
 } from 'lucide-react';
 import { CelebrationEvent } from './types';
+import { FloatingReactions } from './components';
 
 // Pre-defined premium Abstract Logos for branding
 const PREMIUM_LOGOS = [
@@ -353,6 +354,11 @@ export default function App() {
     // Trigger celebratory burst on active card!
     window.dispatchEvent(new CustomEvent('celebration-trigger', {
       detail: { x: 230, y: 385 }
+    }));
+
+    // Trigger Instagram floating reactions
+    window.dispatchEvent(new CustomEvent('reaction-trigger', {
+      detail: { emoji, eventId }
     }));
   };
 
@@ -1364,7 +1370,7 @@ export default function App() {
                   </div>
                   
                   {/* Reduced compact card rendering */}
-                  <div className="flex-1 flex flex-col justify-center">
+                  <div className="flex-1 flex flex-col justify-center relative">
                     <PremiumAwardCard 
                       event={activeEvent}
                       currentTheme={currentTheme}
@@ -1376,6 +1382,7 @@ export default function App() {
                       spotlightSpeed={spotlightSpeed}
                       parallaxIntensity={0}
                     />
+                    <FloatingReactions eventId={activeEvent.id} />
                   </div>
 
                   {/* Reaction counters for Mobile */}
@@ -1412,7 +1419,7 @@ export default function App() {
                 <div className="flex-1 flex items-center p-8 gap-8">
                   {/* Left Half: Card Design */}
                   <div className="w-1/2 flex items-center justify-center">
-                    <div className="w-full max-w-sm">
+                    <div className="w-full max-w-sm relative">
                       <PremiumAwardCard 
                         event={activeEvent}
                         currentTheme={currentTheme}
@@ -1425,6 +1432,7 @@ export default function App() {
                         parallaxIntensity={parallaxIntensity}
                         hideMessage={true}
                       />
+                      <FloatingReactions eventId={activeEvent.id} />
                     </div>
                   </div>
 
@@ -1478,7 +1486,7 @@ export default function App() {
                   </div>
                   
                   {/* Compact card rendering */}
-                  <div className="flex-1 flex flex-col justify-center max-w-[340px] mx-auto w-full">
+                  <div className="flex-1 flex flex-col justify-center max-w-[340px] mx-auto w-full relative">
                     <PremiumAwardCard 
                       event={activeEvent}
                       currentTheme={currentTheme}
@@ -1490,6 +1498,7 @@ export default function App() {
                       spotlightSpeed={spotlightSpeed}
                       parallaxIntensity={parallaxIntensity * 0.8}
                     />
+                    <FloatingReactions eventId={activeEvent.id} />
                   </div>
 
                   {/* Reaction counters for Tablet */}
@@ -1540,6 +1549,7 @@ export default function App() {
                       spotlightSpeed={spotlightSpeed}
                       parallaxIntensity={parallaxIntensity}
                     />
+                    <FloatingReactions eventId={activeEvent.id} />
                   </div>
 
                   {/* Bottom Stats Banner */}
@@ -1584,6 +1594,7 @@ export default function App() {
                     spotlightSpeed={spotlightSpeed}
                     parallaxIntensity={parallaxIntensity}
                   />
+                  <FloatingReactions eventId={activeEvent.id} />
                 </div>
 
                 {/* REACTIONS PILLS & SYSTEM TIMELINE FEED */}

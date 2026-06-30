@@ -10,6 +10,9 @@ export const ReactionBar: React.FC<ReactionBarProps> = ({ eventId, onReaction })
   if (!allowReactions) return null;
 
   const handleReact = (emoji: string) => {
+    window.dispatchEvent(new CustomEvent('reaction-trigger', {
+      detail: { emoji, eventId }
+    }));
     if (onReaction) {
       onReaction(eventId, emoji);
     } else if (contextOnReaction) {

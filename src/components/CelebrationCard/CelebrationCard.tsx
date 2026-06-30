@@ -3,6 +3,7 @@ import { CelebrationCardProps, EventType } from '../../types';
 import { useEmployeeMoments } from '../../providers/EmployeeMomentsProvider';
 import { ReactionBar } from '../ReactionBar';
 import { EffectsController } from '../../effects/EffectsController';
+import { FloatingReactions } from '../FloatingReactions';
 import {
   Cake,
   Award,
@@ -152,7 +153,7 @@ export const CelebrationCard: React.FC<CelebrationCardProps> = React.memo(({
     <div
       id={`celebration-card-${event.id}`}
       style={{ ...cardStyle, borderRadius: 'var(--em-radius, 1rem)' }}
-      className={`relative border p-6 md:p-8 flex flex-col items-center text-center shadow-lg transition-all duration-300 overflow-hidden w-full max-w-lg mx-auto ${
+      className={`relative border p-6 md:p-8 flex flex-col items-center text-center shadow-lg transition-all duration-300 overflow-visible w-full max-w-lg mx-auto ${
         isActive ? 'scale-[1.01] shadow-2xl' : 'opacity-90 grayscale-[10%]'
       } ${isFocused ? 'ring-2 ring-indigo-500' : ''}`}
       role="region"
@@ -221,6 +222,8 @@ export const CelebrationCard: React.FC<CelebrationCardProps> = React.memo(({
       <div className="w-full z-20 mt-4">
         <ReactionBar eventId={event.id} />
       </div>
+
+      <FloatingReactions eventId={event.id} />
     </div>
   );
 });

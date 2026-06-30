@@ -1,217 +1,164 @@
-# JoyAtWork
+# Employee Moments SDK 🚀
 
-> **Celebrate People. Inspire Teams.**
+A highly customizable, high-fidelity card celebration system for employee birthdays, anniversaries, promotions, achievements, and milestones.
 
-JoyAtWork is a modern React SDK for building beautiful employee celebration, recognition, and workplace engagement experiences.
-
-Whether it's birthdays, work anniversaries, promotions, awards, festivals, or employee milestones, JoyAtWork helps organizations create meaningful moments inside employee portals, HRMS platforms, intranets, and digital workplace applications.
+Designed with visual balance, elegant typography pairing, motion-safe transitions, and built-in support for any framework: **React**, **Angular**, **Vue**, or **Plain HTML/Vanilla JavaScript**.
 
 ---
 
-## ✨ Why JoyAtWork?
+## 📦 Package Distribution Features
 
-Most employee portals are functional.
+This package compiles into multiple production-ready targets using **Vite Library Mode**:
 
-JoyAtWork makes them memorable.
-
-Instead of static employee lists and plain notifications, JoyAtWork transforms workplace events into premium, interactive experiences that employees genuinely enjoy.
-
-Designed with modern UX, elegant animations, and enterprise customization in mind.
+1. **React SDK Module (ESM/UMD)**: Optimized for standard React/Next.js architectures, avoiding duplicate React runtime instantiations.
+2. **Standalone Web Component Custom Element**: Bundles React internally. Perfect for non-React frameworks like Angular or pure HTML/JS drops.
+3. **Responsive Grid & Slider Components**: Access the core celebration cards, full lists, search walls, or autoplaying carousels.
 
 ---
 
-## 🎯 Use Cases
+## 🛠️ Build and Compiling
 
-- 🎂 Employee Birthdays
-- ⭐ Work Anniversaries
-- 🏆 Employee Awards
-- 🚀 Promotions
-- 👋 New Joiners
-- 🎉 Festival Greetings
-- ❤️ Employee Recognition
-- 🖥 Office TV Displays
-- 📺 Reception Kiosks
-- 🏢 Corporate Intranets
-- 📊 Employee Dashboards
-
----
-
-## 🚀 Features
-
-### Celebration Experiences
-
-- Beautiful animated celebration cards
-- Multiple celebration types
-- Responsive carousel
-- Spotlight mode
-- Recognition wall
-- TV display mode *(Coming Soon)*
-
-### Employee Engagement
-
-- Emoji reactions
-- Appreciation messages *(Coming Soon)*
-- Recognition badges
-- Years of service
-- Department labels
-- Achievement highlights
-
-### Customization
-
-- Multiple premium themes
-- Corporate branding
-- Company logo support
-- Custom color palette
-- Localization support
-- Responsive layouts
-
-### Developer Experience
-
-- React + TypeScript
-- Lightweight
-- SSR compatible
-- Tree-shakable
-- Framework friendly
-- Easy integration
-
----
-
-# Installation
+To generate production-ready bundles, run:
 
 ```bash
-npm install @joyatwork/react
+# Clean previous builds and run all compiler pipelines
+npm run build:all
 ```
 
-or
-
-```bash
-yarn add @joyatwork/react
-```
+This generates:
+- `dist/react/`: Lightweight React-friendly library (externalized peer dependencies).
+- `dist/wc/`: Standalone drop-in Custom Element (embedded React runtime).
+- `dist/types/`: Complete `.d.ts` TypeScript definitions.
+- `dist/react/index.css`: Compiled Tailwind utility styles.
 
 ---
 
-# Quick Start
+## 💡 Quick Integration Guide
+
+### 1. React / Next.js Integration
 
 ```tsx
-import { CelebrationCarousel } from "@joyatwork/react";
+import React from 'react';
+import { EmployeeMomentsProvider, CelebrationCarousel } from 'employee-moments-sdk';
+import 'employee-moments-sdk/dist/react/index.css';
 
 const events = [
   {
-    id: "1",
-    type: "birthday",
-    name: "Marcus Vance",
-    designation: "Principal Engineer",
-    department: "Engineering",
-    image: "/avatar.jpg"
+    id: 'ev-1',
+    type: 'birthday',
+    name: 'Sophia Martinez',
+    designation: 'Senior Product Designer',
+    department: 'UX Engineering',
+    company: 'Nexus Tech',
+    date: 'Today',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200'
   }
 ];
 
 export default function App() {
   return (
-    <CelebrationCarousel
-      events={events}
-      theme="executive-dark"
-      allowReactions
-    />
+    <EmployeeMomentsProvider theme="premium" locale="en">
+      <div style={{ maxWidth: '500px', margin: '40px auto' }}>
+        <CelebrationCarousel events={events} autoPlay={true} />
+      </div>
+    </EmployeeMomentsProvider>
   );
 }
 ```
 
----
+### 2. Angular Core Integration
 
-# Current Components
+Enable HTML Custom Elements inside your module and load our Web Component bundle:
 
-| Component | Status |
-|-----------|--------|
-| Celebration Carousel | ✅ |
-| Celebration Card | ✅ |
-| Theme System | ✅ |
-| Corporate Branding | ✅ |
-| Reactions | ✅ |
-| Multiple Event Types | 🚧 |
-| Spotlight Mode | 🚧 |
-| Wall Mode | 🚧 |
-| TV Mode | 🚧 |
-| Localization | 🚧 |
+```typescript
+// main.ts
+import 'employee-moments-sdk/dist/react/index.js'; // imports the web-component auto-registration
+```
 
----
+```typescript
+// app.module.ts
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-# Roadmap
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  // ...
+})
+export class AppModule {}
+```
 
-## Version 1.x
+```html
+<!-- app.component.html -->
+<employee-moments-carousel
+  [events]="myEvents"
+  theme="premium"
+  allow-reactions="true"
+  (reaction)="handleReaction($event)"
+></employee-moments-carousel>
+```
 
-- [x] Celebration Carousel
-- [x] Multiple templates
-- [x] Theme engine
-- [x] Corporate branding
-- [x] Emoji reactions
+### 3. Vanilla JavaScript / Plain HTML
 
----
+Drop the stylesheet and self-contained script tag directly onto your page:
 
-## Version 2.x
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Company Portal</title>
+  
+  <!-- 1. Include compiled Tailwind styling -->
+  <link rel="stylesheet" href="https://unpkg.com/employee-moments-sdk/dist/react/index.css">
+  
+  <!-- 2. Include self-contained Web Component bundle -->
+  <script type="module" src="https://unpkg.com/employee-moments-sdk/dist/wc/index.umd.cjs"></script>
+</head>
+<body style="background: #f8fafc; padding: 40px;">
 
-- [ ] Spotlight Mode
-- [ ] Wall Mode
-- [ ] TV Presentation Mode
-- [ ] Wishes & Appreciation
-- [ ] Localization
-- [ ] Plugin System
-- [ ] Motion Presets
+  <!-- 3. Embed the Custom Element tag -->
+  <div style="max-width: 500px; margin: 0 auto;">
+    <employee-moments-carousel id="moments-widget" theme="illustrated"></employee-moments-carousel>
+  </div>
 
----
+  <script>
+    const widget = document.getElementById('moments-widget');
+    
+    // Assign dataset directly via property bindings
+    widget.events = [
+      {
+        id: 'ev-1',
+        type: 'anniversary',
+        name: 'Liam Chen',
+        designation: 'Lead Security Architect',
+        department: 'Infrastructure',
+        company: 'Nexus Tech',
+        date: 'Jun 30',
+        years: 5
+      }
+    ];
 
-## Version 3.x
-
-- [ ] AI-powered celebration messages
-- [ ] Custom rendering API
-- [ ] Enterprise template packs
-- [ ] Interactive recognition experiences
-
----
-
-# Design Principles
-
-JoyAtWork follows a few simple principles:
-
-- Elegant over flashy
-- Premium over playful
-- Accessible by default
-- Lightweight by design
-- Enterprise ready
-- Beautiful out of the box
-
----
-
-# Vision
-
-JoyAtWork aims to become the **open-source standard for workplace celebration and employee recognition experiences**.
-
-Not another component library.
-
-An **Employee Experience SDK**.
-
----
-
-# Contributing
-
-Contributions, feature ideas, design improvements, and bug reports are always welcome.
-
-If you have ideas to make workplace experiences more engaging, we'd love to hear from you.
-
----
-
-# License
-
-MIT License.
+    // Listen to standard custom reaction events
+    widget.addEventListener('reaction', (event) => {
+      console.log('Reaction clicked:', event.detail);
+      // { eventId: "ev-1", emoji: "🎉" }
+    });
+  </script>
+</body>
+</html>
+```
 
 ---
 
-## ⭐ Support
+## 🎨 Theme Configuration Values
 
-If JoyAtWork helps your team create better workplace experiences, consider giving the repository a ⭐.
-
-It helps the project grow and reach more developers.
+Customize cards using the `theme` prop/attribute:
+- `corporate`: Safe, high-contrast, professional, minimalist corporate palettes.
+- `festive`: Vibrant, active, warm holiday and festival styling.
+- `premium`: Luxury dark gradient backgrounds with rich card highlights.
+- `retro`: Monospace font styling with vintage bordered terminals.
 
 ---
 
-Built with ❤️ for happier workplaces.
+## 📜 License
+
+MIT License. Designed with excellence for seamless enterprise portals.
