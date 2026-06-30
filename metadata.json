@@ -1,0 +1,6 @@
+{
+  "name": "Employee Recognition Experience",
+  "description": "A high-fidelity, cinematic employee recognition platform utilizing dynamic 3D motion, real-time mouse-based card tilt physics, custom luxury branding, and ambient gold dust rendering.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

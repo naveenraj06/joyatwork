@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-brand-bg: #05070B;
+  --color-brand-surface: #0B1020;
+  --color-brand-elevated: #121826;
+  --color-brand-primary: #7B61FF;
+  --color-brand-accent: #D4AF37;
+  --color-brand-text: #F8FAFC;
+  --color-brand-secondary: #94A3B8;
+  --color-brand-border: rgba(255, 255, 255, 0.06);
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #05070B;
+  color: #F8FAFC;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom scrollbars for premium feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #05070B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Custom styles for lighting overlays and luxury look */
+.spotlight-radial {
+  background: radial-gradient(circle 350px at var(--x, 50%) var(--y, 50%), rgba(123, 97, 255, 0.15), transparent 80%);
+}
+
+.gold-spotlight {
+  background: radial-gradient(circle 400px at var(--x, 50%) var(--y, 50%), rgba(212, 175, 55, 0.12), transparent 80%);
+}
+
+.ambient-aurora {
+  filter: blur(140px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Elegant accordion transitions */
+.accordion-content {
+  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-in-out;
+}
