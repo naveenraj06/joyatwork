@@ -4,7 +4,8 @@ import {
   RefreshCw, Layers, Monitor, Tv, Smartphone, Tablet, Compass, HelpCircle, 
   ChevronRight, ChevronDown, Check, Upload, Calendar, Building, 
   MessageSquare, Copy, Sliders, Play, Pause, X, Search, ShieldCheck, 
-  UserPlus, Volume2, Maximize2, Briefcase, Star, ArrowRight, BookOpen
+  UserPlus, Volume2, Maximize2, Briefcase, Star, ArrowRight, BookOpen,
+  Columns, Image, LayoutGrid
 } from 'lucide-react';
 import { CelebrationEvent } from './types';
 import { FloatingReactions } from './components';
@@ -149,6 +150,58 @@ const THEME_PRESETS: PresetTheme[] = [
     secondary: '#F472B6',
     glow: 'rgba(217, 70, 239, 0.25)',
     ambient: 'radial-gradient(circle at 50% -20%, rgba(217, 70, 239, 0.2), transparent 70%)'
+  },
+  {
+    id: 'emerald_prestige',
+    name: 'Emerald Prestige',
+    bg: '#021B15',
+    cardBg: '#062D24',
+    cardBorder: 'rgba(16, 185, 129, 0.15)',
+    primary: '#10B981',
+    accent: '#FBBF24',
+    text: '#ECFDF5',
+    secondary: '#34D399',
+    glow: 'rgba(16, 185, 129, 0.25)',
+    ambient: 'radial-gradient(circle at 50% -20%, rgba(16, 185, 129, 0.2), transparent 70%)'
+  },
+  {
+    id: 'retro_sunset',
+    name: 'Retro Sunset',
+    bg: '#1A0B2E',
+    cardBg: '#11052C',
+    cardBorder: 'rgba(244, 63, 94, 0.18)',
+    primary: '#F43F5E',
+    accent: '#F59E0B',
+    text: '#FFE4E6',
+    secondary: '#EC4899',
+    glow: 'rgba(244, 63, 94, 0.25)',
+    ambient: 'radial-gradient(circle at 50% -20%, rgba(244, 63, 94, 0.2), transparent 70%)'
+  },
+  {
+    id: 'cosmic_violet',
+    name: 'Cosmic Violet',
+    bg: '#0A051D',
+    cardBg: '#12082D',
+    cardBorder: 'rgba(139, 92, 246, 0.16)',
+    primary: '#8B5CF6',
+    accent: '#67E8F9',
+    text: '#F5F3FF',
+    secondary: '#A78BFA',
+    glow: 'rgba(139, 92, 246, 0.25)',
+    ambient: 'radial-gradient(circle at 50% -20%, rgba(139, 92, 246, 0.2), transparent 70%)'
+  },
+  {
+    id: 'icy_platinum',
+    name: 'Icy Platinum',
+    bg: '#0B111E',
+    cardBg: '#152033',
+    cardBorder: 'rgba(148, 163, 184, 0.18)',
+    primary: '#94A3B8',
+    accent: '#38BDF8',
+    text: '#F8FAFC',
+    secondary: '#CBD5E1',
+    glow: 'rgba(148, 163, 184, 0.2)',
+    ambient: 'radial-gradient(circle at 50% -20%, rgba(56, 189, 248, 0.15), transparent 70%)'
   }
 ];
 
@@ -229,6 +282,9 @@ export default function App() {
   // Theme State
   const [activeThemeId, setActiveThemeId] = useState<string>('executive_dark');
   
+  // Card Template State: 'executive_crest' | 'horizontal_split' | 'polaroid_spotlight' | 'minimalist_editorial'
+  const [cardTemplate, setCardTemplate] = useState<'executive_crest' | 'horizontal_split' | 'polaroid_spotlight' | 'minimalist_editorial'>('executive_crest');
+  
   // Device Mode State: 'desktop' | 'tv' | 'presentation' | 'mobile' | 'tablet' | 'billboard'
   const [deviceMode, setDeviceMode] = useState<'desktop' | 'tv' | 'presentation' | 'mobile' | 'tablet' | 'billboard'>('desktop');
   
@@ -248,6 +304,8 @@ export default function App() {
   // Motion Parameters
   const [tiltLimit, setTiltLimit] = useState<number>(6); // Default 6 degrees maximum tilt
   const [particlesEnabled, setParticlesEnabled] = useState<boolean>(true);
+  const [balloonsEnabled, setBalloonsEnabled] = useState<boolean>(true);
+  const [artifactsEnabled, setArtifactsEnabled] = useState<boolean>(true);
   const [spotlightSpeed, setSpotlightSpeed] = useState<'slow' | 'normal' | 'static'>('normal');
   const [parallaxIntensity, setParallaxIntensity] = useState<number>(6); // Max px movement of layers
 
@@ -906,6 +964,36 @@ export default function App() {
                     </button>
                   </div>
 
+                  {/* Floating Balloons */}
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[10px] uppercase font-bold text-slate-400">Ambient Card Balloons</span>
+                    <button 
+                      onClick={() => setBalloonsEnabled(!balloonsEnabled)}
+                      className={`relative w-10 h-5 rounded-full transition-all duration-300 cursor-pointer ${
+                        balloonsEnabled ? 'bg-purple-600' : 'bg-white/10'
+                      }`}
+                    >
+                      <div className={`w-4 h-4 rounded-full bg-white absolute top-0.5 transition-all duration-300 ${
+                        balloonsEnabled ? 'left-5.5' : 'left-0.5'
+                      }`} />
+                    </button>
+                  </div>
+
+                  {/* Floating Geometric Artifacts */}
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-[10px] uppercase font-bold text-slate-400">Floating Card Artifacts</span>
+                    <button 
+                      onClick={() => setArtifactsEnabled(!artifactsEnabled)}
+                      className={`relative w-10 h-5 rounded-full transition-all duration-300 cursor-pointer ${
+                        artifactsEnabled ? 'bg-purple-600' : 'bg-white/10'
+                      }`}
+                    >
+                      <div className={`w-4 h-4 rounded-full bg-white absolute top-0.5 transition-all duration-300 ${
+                        artifactsEnabled ? 'left-5.5' : 'left-0.5'
+                      }`} />
+                    </button>
+                  </div>
+
                   {/* Dynamic sweeping lighting */}
                   <div className="space-y-1.5 pb-1">
                     <label className="text-[10px] uppercase font-bold text-slate-400 block">Spotlight Movement Rate</label>
@@ -987,6 +1075,39 @@ export default function App() {
                               <div className="w-3.5 h-3.5 rounded-full border border-white/10" style={{ backgroundColor: t.cardBg }} />
                               <div className="w-3.5 h-3.5 rounded-full border border-white/10" style={{ backgroundColor: t.accent }} />
                             </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Card Template Selection */}
+                  <div className="space-y-2">
+                    <label className="text-[10px] uppercase font-bold text-slate-400 block">Card Layout Template</label>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {[
+                        { id: 'executive_crest', name: 'Executive Crest', icon: Trophy, desc: 'Centered ceremonial look' },
+                        { id: 'horizontal_split', name: 'Horizontal Split', icon: Columns, desc: 'Left portrait, right info' },
+                        { id: 'polaroid_spotlight', name: 'Hero Polaroid', icon: Image, desc: 'Handcrafted tactile borders' },
+                        { id: 'minimalist_editorial', name: 'Minimal Editorial', icon: LayoutGrid, desc: 'Asymmetric bold layout' }
+                      ].map((tpl) => {
+                        const isS = cardTemplate === tpl.id;
+                        const TplIcon = tpl.icon;
+                        return (
+                          <button 
+                            key={tpl.id}
+                            onClick={() => setCardTemplate(tpl.id as any)}
+                            className={`p-2 rounded-lg border text-left flex flex-col gap-1 transition-all cursor-pointer ${
+                              isS 
+                                ? 'bg-white/5 border-white/20 text-white shadow-lg' 
+                                : 'border-transparent text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                            }`}
+                          >
+                            <div className="flex items-center gap-1.5 font-bold">
+                              <TplIcon className="w-3.5 h-3.5" style={isS ? { color: customAccent } : {}} />
+                              <span className="text-[10px]">{tpl.name}</span>
+                            </div>
+                            <span className="text-[8px] opacity-50 block leading-tight">{tpl.desc}</span>
                           </button>
                         );
                       })}
@@ -1086,6 +1207,7 @@ export default function App() {
     achievement: "${activeEvent.achievement || ''}"
   }}
   theme="${activeThemeId}"
+  cardTemplate="${cardTemplate}"
   isActive={true}
   particlesEnabled={${particlesEnabled}}
   customAccent="${customAccent}"
@@ -1107,6 +1229,7 @@ export default function App() {
     achievement: "${activeEvent.achievement || ''}"
   }}
   theme="${activeThemeId}"
+  cardTemplate="${cardTemplate}"
   isActive={true}
   particlesEnabled={${particlesEnabled}}
   customAccent="${customAccent}"
@@ -1125,6 +1248,7 @@ export default function App() {
 <!-- 2. Declare element with attributes -->
 <employee-moments-card
   theme="${activeThemeId}"
+  card-template="${cardTemplate}"
   locale="en"
   event='{
     "name": "${activeEvent.name}",
@@ -1146,6 +1270,7 @@ export default function App() {
 <!-- 2. Declare element with attributes -->
 <employee-moments-card
   theme="${activeThemeId}"
+  card-template="${cardTemplate}"
   locale="en"
   event='{
     "name": "${activeEvent.name}",
@@ -1379,8 +1504,11 @@ export default function App() {
                       customAccent={customAccent}
                       tiltLimit={0} // No tilt in mobile frame for viewport stability
                       particlesEnabled={particlesEnabled}
+                      balloonsEnabled={balloonsEnabled}
+                      artifactsEnabled={artifactsEnabled}
                       spotlightSpeed={spotlightSpeed}
                       parallaxIntensity={0}
+                      cardTemplate={cardTemplate}
                     />
                     <FloatingReactions eventId={activeEvent.id} />
                   </div>
@@ -1428,9 +1556,12 @@ export default function App() {
                         customAccent={customAccent}
                         tiltLimit={tiltLimit}
                         particlesEnabled={particlesEnabled}
+                        balloonsEnabled={balloonsEnabled}
+                        artifactsEnabled={artifactsEnabled}
                         spotlightSpeed={spotlightSpeed}
                         parallaxIntensity={parallaxIntensity}
                         hideMessage={true}
+                        cardTemplate={cardTemplate}
                       />
                       <FloatingReactions eventId={activeEvent.id} />
                     </div>
@@ -1495,8 +1626,11 @@ export default function App() {
                       customAccent={customAccent}
                       tiltLimit={tiltLimit * 0.8}
                       particlesEnabled={particlesEnabled}
+                      balloonsEnabled={balloonsEnabled}
+                      artifactsEnabled={artifactsEnabled}
                       spotlightSpeed={spotlightSpeed}
                       parallaxIntensity={parallaxIntensity * 0.8}
+                      cardTemplate={cardTemplate}
                     />
                     <FloatingReactions eventId={activeEvent.id} />
                   </div>
@@ -1546,8 +1680,11 @@ export default function App() {
                       customAccent={customAccent}
                       tiltLimit={tiltLimit}
                       particlesEnabled={particlesEnabled}
+                      balloonsEnabled={balloonsEnabled}
+                      artifactsEnabled={artifactsEnabled}
                       spotlightSpeed={spotlightSpeed}
                       parallaxIntensity={parallaxIntensity}
+                      cardTemplate={cardTemplate}
                     />
                     <FloatingReactions eventId={activeEvent.id} />
                   </div>
@@ -1591,8 +1728,11 @@ export default function App() {
                     customAccent={customAccent}
                     tiltLimit={tiltLimit}
                     particlesEnabled={particlesEnabled}
+                    balloonsEnabled={balloonsEnabled}
+                    artifactsEnabled={artifactsEnabled}
                     spotlightSpeed={spotlightSpeed}
                     parallaxIntensity={parallaxIntensity}
+                    cardTemplate={cardTemplate}
                   />
                   <FloatingReactions eventId={activeEvent.id} />
                 </div>
@@ -1689,9 +1829,12 @@ interface CardProps {
   customAccent: string;
   tiltLimit: number;
   particlesEnabled: boolean;
+  balloonsEnabled?: boolean;
+  artifactsEnabled?: boolean;
   spotlightSpeed: 'slow' | 'normal' | 'static';
   parallaxIntensity: number;
   hideMessage?: boolean;
+  cardTemplate?: 'executive_crest' | 'horizontal_split' | 'polaroid_spotlight' | 'minimalist_editorial';
 }
 
 function PremiumAwardCard({
@@ -1702,9 +1845,12 @@ function PremiumAwardCard({
   customAccent,
   tiltLimit,
   particlesEnabled,
+  balloonsEnabled = true,
+  artifactsEnabled = true,
   spotlightSpeed,
   parallaxIntensity,
-  hideMessage = false
+  hideMessage = false,
+  cardTemplate = 'executive_crest'
 }: CardProps) {
   
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -1779,8 +1925,16 @@ function PremiumAwardCard({
           : 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s, box-shadow 0.4s'
       }}
     >
-      {/* 1. CUSTOM CANVAS GOLD DUST PARTICLES LAYER */}
-      {particlesEnabled && <GoldDustCanvas eventId={event.id} customAccent={customAccent} />}
+      {/* 1. CUSTOM CANVAS LAYER (PARTICLES, BALLOONS, ARTIFACTS) */}
+      {(particlesEnabled || balloonsEnabled || artifactsEnabled) && (
+        <GoldDustCanvas 
+          event={event} 
+          customAccent={customAccent} 
+          particlesEnabled={particlesEnabled}
+          balloonsEnabled={balloonsEnabled}
+          artifactsEnabled={artifactsEnabled}
+        />
+      )}
 
       {/* 2. DYNAMIC SPOTLIGHT OVERLAY LIGHTING */}
       <div 
@@ -1805,141 +1959,414 @@ function PremiumAwardCard({
       />
 
       {/* 3. CARD CONTAINER (LAYERS WITH PERSPECTIVE SHIFT) */}
-      <div className="absolute inset-0 p-8 flex flex-col justify-between z-10 select-none">
-        
-        {/* CARD HEADER */}
-        <div 
-          className="flex items-center justify-between transition-all duration-300"
-          style={{ transform: `translate3d(${translationVector.x * -0.5}px, ${translationVector.y * -0.5}px, 0)` }}
-        >
-          {/* Logo Crest */}
-          <div className="flex items-center gap-2.5">
-            <LogoIcon className="w-4 h-4" style={{ color: customAccent }} />
-            <span className="text-[10px] font-mono font-black tracking-[0.2em] uppercase text-white opacity-80">
-              {companyName}
-            </span>
-          </div>
-
-          {/* Date Label */}
-          <div className="flex items-center gap-1.5 text-[9px] font-mono text-slate-400 opacity-60">
-            <Calendar className="w-3.5 h-3.5" />
-            <span>{event.date}</span>
-          </div>
-        </div>
-
-        {/* MIDDLE LAYER: DOMINANT LARGE AVATAR */}
-        <div 
-          className="flex-1 flex flex-col items-center justify-center my-6 relative transition-transform duration-300"
-          style={{ transform: `translate3d(${translationVector.x * 1.2}px, ${translationVector.y * 1.2}px, 0)` }}
-        >
-          {/* Professional High contrast Glow ring */}
-          <div className="relative group select-none">
-            {/* Pulsing ring */}
+      <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-10 select-none">
+        {cardTemplate === 'executive_crest' && (
+          <>
+            {/* CARD HEADER */}
             <div 
-              className="absolute -inset-1.5 rounded-full opacity-35 blur-xl transition-opacity duration-500 animate-pulse"
-              style={{
-                background: `radial-gradient(circle, ${customAccent} 0%, transparent 70%)`
-              }}
-            />
-            
-            {/* Card Portrait boundary */}
-            <div 
-              className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-[3.5px] shadow-2xl bg-zinc-900 select-none"
-              style={{ borderColor: currentTheme.cardBg }}
+              className="flex items-center justify-between transition-all duration-300"
+              style={{ transform: `translate3d(${translationVector.x * -0.5}px, ${translationVector.y * -0.5}px, 0)` }}
             >
-              {event.image ? (
-                <img 
-                  src={event.image} 
-                  alt={event.name} 
-                  className="w-full h-full object-cover select-none pointer-events-none"
-                  referrerPolicy="no-referrer"
-                  loading="lazy"
-                />
-              ) : (
+              {/* Logo Crest */}
+              <div className="flex items-center gap-2.5">
+                <LogoIcon className="w-4 h-4" style={{ color: customAccent }} />
+                <span className="text-[10px] font-mono font-black tracking-[0.2em] uppercase text-white opacity-80">
+                  {companyName}
+                </span>
+              </div>
+
+              {/* Date Label */}
+              <div className="flex items-center gap-1.5 text-[9px] font-mono text-slate-400 opacity-60">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>{event.date}</span>
+              </div>
+            </div>
+
+            {/* MIDDLE LAYER: DOMINANT LARGE AVATAR */}
+            <div 
+              className="flex-1 flex flex-col items-center justify-center my-4 relative transition-transform duration-300"
+              style={{ transform: `translate3d(${translationVector.x * 1.2}px, ${translationVector.y * 1.2}px, 0)` }}
+            >
+              {/* Professional High contrast Glow ring */}
+              <div className="relative group select-none">
+                {/* Pulsing ring */}
                 <div 
-                  className="w-full h-full flex items-center justify-center font-extrabold text-4xl select-none"
-                  style={{ color: customAccent, backgroundColor: '#111827' }}
+                  className="absolute -inset-1.5 rounded-full opacity-35 blur-xl transition-opacity duration-500 animate-pulse"
+                  style={{
+                    background: `radial-gradient(circle, ${customAccent} 0%, transparent 70%)`
+                  }}
+                />
+                
+                {/* Card Portrait boundary */}
+                <div 
+                  className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-[3.5px] shadow-2xl bg-zinc-900 select-none"
+                  style={{ borderColor: currentTheme.cardBg }}
                 >
-                  {initials}
+                  {event.image ? (
+                    <img 
+                      src={event.image} 
+                      alt={event.name} 
+                      className="w-full h-full object-cover select-none pointer-events-none"
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div 
+                      className="w-full h-full flex items-center justify-center font-extrabold text-4xl select-none"
+                      style={{ color: customAccent, backgroundColor: '#111827' }}
+                    >
+                      {initials}
+                    </div>
+                  )}
+                </div>
+
+                {/* Float badge overlay indicating event category */}
+                <div 
+                  className="absolute bottom-1 right-1 p-2 rounded-full border shadow-xl z-20 flex items-center justify-center"
+                  style={{ 
+                    backgroundColor: currentTheme.cardBg, 
+                    borderColor: currentTheme.cardBorder,
+                    color: customAccent 
+                  }}
+                >
+                  {event.type === 'award' ? (
+                    <Trophy className="w-4 h-4" />
+                  ) : event.type === 'anniversary' ? (
+                    <Award className="w-4 h-4" />
+                  ) : event.type === 'promotion' ? (
+                    <Star className="w-4 h-4" />
+                  ) : (
+                    <UserPlus className="w-4 h-4" />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* BOTTOM LAYER: MAJESTIC EXECUTIVE TYPOGRAPHY */}
+            <div 
+              className="text-center space-y-3 transition-transform duration-300"
+              style={{ transform: `translate3d(${translationVector.x * -0.8}px, ${translationVector.y * -0.8}px, 0)` }}
+            >
+              <div className="space-y-1">
+                <p 
+                  className="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase"
+                  style={{ color: customAccent }}
+                >
+                  {event.designation || 'Technology Expert'}
+                </p>
+
+                <h1 className="text-2xl md:text-3xl lg:text-[34px] font-extrabold tracking-tight text-white leading-tight font-display">
+                  {event.name}
+                </h1>
+
+                <p className="text-[10px] font-medium opacity-50 uppercase tracking-widest text-slate-400">
+                  {event.department || 'Platform Engineering Core'}
+                </p>
+              </div>
+
+              {!hideMessage && (
+                <>
+                  <div 
+                    className="w-12 h-[2px] mx-auto rounded-full shadow" 
+                    style={{ backgroundColor: customAccent }}
+                  />
+                  <p className="text-[11px] md:text-xs leading-relaxed text-slate-300 font-light max-w-sm mx-auto select-none">
+                    "{event.customMessage || event.achievement}"
+                  </p>
+                </>
+              )}
+            </div>
+          </>
+        )}
+
+        {cardTemplate === 'horizontal_split' && (
+          <div className="flex flex-col h-full justify-between">
+            {/* Top row: Side-by-Side Logo & Date */}
+            <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: currentTheme.cardBorder }}>
+              <div className="flex items-center gap-2">
+                <LogoIcon className="w-4 h-4" style={{ color: customAccent }} />
+                <span className="text-[10px] font-mono font-black tracking-wider uppercase text-white opacity-80">
+                  {companyName}
+                </span>
+              </div>
+              <span className="text-[9px] font-mono text-slate-400 opacity-60">{event.date}</span>
+            </div>
+
+            {/* Middle row: Left Portrait, Right Quick Info */}
+            <div className="flex items-center gap-4 my-auto py-2">
+              {/* Left Column: Portrait */}
+              <div className="relative shrink-0 select-none">
+                <div 
+                  className="absolute -inset-1 rounded-full opacity-35 blur-md"
+                  style={{
+                    background: `radial-gradient(circle, ${customAccent} 0%, transparent 75%)`
+                  }}
+                />
+                <div 
+                  className="relative w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2 shadow-xl bg-zinc-900"
+                  style={{ borderColor: currentTheme.cardBorder }}
+                >
+                  {event.image ? (
+                    <img 
+                      src={event.image} 
+                      alt={event.name} 
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div 
+                      className="w-full h-full flex items-center justify-center font-extrabold text-2xl"
+                      style={{ color: customAccent, backgroundColor: '#111827' }}
+                    >
+                      {initials}
+                    </div>
+                  )}
+                </div>
+
+                <div 
+                  className="absolute bottom-0 right-0 p-1.5 rounded-full border shadow-md z-20 flex items-center justify-center"
+                  style={{ 
+                    backgroundColor: currentTheme.cardBg, 
+                    borderColor: currentTheme.cardBorder,
+                    color: customAccent 
+                  }}
+                >
+                  {event.type === 'award' ? (
+                    <Trophy className="w-3.5 h-3.5" />
+                  ) : event.type === 'anniversary' ? (
+                    <Award className="w-3.5 h-3.5" />
+                  ) : event.type === 'promotion' ? (
+                    <Star className="w-3.5 h-3.5" />
+                  ) : (
+                    <UserPlus className="w-3.5 h-3.5" />
+                  )}
+                </div>
+              </div>
+
+              {/* Right Column: Metadata stack left-aligned */}
+              <div className="flex-1 text-left space-y-1.5 min-w-0">
+                <span 
+                  className="text-[9px] font-bold tracking-[0.15em] uppercase truncate block"
+                  style={{ color: customAccent }}
+                >
+                  {event.designation || 'Technology Expert'}
+                </span>
+                <h1 className="text-xl md:text-2xl font-black tracking-tight text-white leading-tight font-display truncate">
+                  {event.name}
+                </h1>
+                <p className="text-[9px] font-medium opacity-50 uppercase tracking-widest text-slate-400 truncate">
+                  {event.department || 'Platform Engineering Core'}
+                </p>
+              </div>
+            </div>
+
+            {/* Bottom blockquote: Accent line highlight */}
+            <div className="space-y-2 border-t pt-3 text-left" style={{ borderColor: currentTheme.cardBorder }}>
+              {!hideMessage && (
+                <div className="pl-3 border-l-2" style={{ borderColor: customAccent }}>
+                  <p className="text-[11px] leading-relaxed text-slate-300 font-light italic">
+                    "{event.customMessage || event.achievement}"
+                  </p>
                 </div>
               )}
+              <div className="flex justify-between items-center text-[8px] font-mono opacity-40">
+                <span>VERIFIED RECORD</span>
+                <span>SECURE ID: #{event.id}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {cardTemplate === 'polaroid_spotlight' && (
+          <div className="flex flex-col h-full justify-between items-center">
+            {/* Compact Header */}
+            <div className="w-full flex items-center justify-between text-[8px] font-mono opacity-50">
+              <span className="uppercase tracking-widest">{companyName} MEMORY</span>
+              <span>{event.date}</span>
             </div>
 
-            {/* Float badge overlay indicating event category (No bouncing bounce, elegant) */}
-            <div 
-              className="absolute bottom-1 right-1 p-2 rounded-full border shadow-xl z-20 flex items-center justify-center"
-              style={{ 
-                backgroundColor: currentTheme.cardBg, 
-                borderColor: currentTheme.cardBorder,
-                color: customAccent 
-              }}
-            >
-              {event.type === 'award' ? (
-                <Trophy className="w-4.5 h-4.5" />
-              ) : event.type === 'anniversary' ? (
-                <Award className="w-4.5 h-4.5" />
-              ) : event.type === 'promotion' ? (
-                <Star className="w-4.5 h-4.5" />
-              ) : (
-                <UserPlus className="w-4.5 h-4.5" />
+            {/* The Polaroid block */}
+            <div className="relative group select-none my-auto rotate-[-1.5deg] hover:rotate-[0deg] transition-transform duration-300">
+              {/* Polaroid Frame */}
+              <div 
+                className="p-3 pb-6 rounded-md shadow-2xl flex flex-col items-center bg-zinc-900 border"
+                style={{ borderColor: 'rgba(255,255,255,0.08)' }}
+              >
+                {/* Mount tape */}
+                <div 
+                  className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-14 h-4 bg-white/10 backdrop-blur-md rounded border border-white/10 rotate-[3deg] shadow-sm z-20"
+                />
+
+                {/* Photo Square */}
+                <div className="w-28 h-28 md:w-34 md:h-34 overflow-hidden border border-black shadow-inner bg-black select-none">
+                  {event.image ? (
+                    <img 
+                      src={event.image} 
+                      alt={event.name} 
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div 
+                      className="w-full h-full flex items-center justify-center font-extrabold text-2xl text-zinc-700"
+                    >
+                      {initials}
+                    </div>
+                  )}
+                </div>
+
+                {/* Caption space in the frame */}
+                <span className="mt-3 text-[10px] font-display font-medium text-slate-300 tracking-wider">
+                  {event.name}
+                </span>
+              </div>
+
+              {/* Float Category Badge */}
+              <div 
+                className="absolute -bottom-2 -right-2 p-1.5 rounded-full border shadow-md z-20 flex items-center justify-center"
+                style={{ 
+                  backgroundColor: currentTheme.cardBg, 
+                  borderColor: currentTheme.cardBorder,
+                  color: customAccent 
+                }}
+              >
+                {event.type === 'award' ? (
+                  <Trophy className="w-3.5 h-3.5" />
+                ) : event.type === 'anniversary' ? (
+                  <Award className="w-3.5 h-3.5" />
+                ) : event.type === 'promotion' ? (
+                  <Star className="w-3.5 h-3.5" />
+                ) : (
+                  <UserPlus className="w-3.5 h-3.5" />
+                )}
+              </div>
+            </div>
+
+            {/* Text description under frame */}
+            <div className="w-full text-center space-y-2 mt-1">
+              <div className="space-y-0.5">
+                <span className="text-[9px] font-bold uppercase tracking-widest block" style={{ color: customAccent }}>
+                  {event.designation}
+                </span>
+                <span className="text-[8px] font-medium uppercase tracking-wider text-slate-500 block">
+                  {event.department}
+                </span>
+              </div>
+              {!hideMessage && (
+                <p className="text-[10px] text-slate-400 font-light max-w-xs mx-auto line-clamp-2 italic">
+                  "{event.customMessage || event.achievement}"
+                </p>
               )}
             </div>
           </div>
-        </div>
+        )}
 
-        {/* BOTTOM LAYER: MAJESTIC EXECUTIVE TYPOGRAPHY */}
-        <div 
-          className="text-center space-y-3.5 transition-transform duration-300"
-          style={{ transform: `translate3d(${translationVector.x * -0.8}px, ${translationVector.y * -0.8}px, 0)` }}
-        >
-          <div className="space-y-1">
-            {/* Designation: 18px Uppercase Letter spacing */}
-            <p 
-              className="text-[10px] md:text-xs font-bold tracking-[0.22em] uppercase"
-              style={{ color: customAccent }}
-            >
-              {event.designation || 'Technology Expert'}
-            </p>
+        {cardTemplate === 'minimalist_editorial' && (
+          <div className="flex flex-col h-full justify-between relative overflow-hidden text-left">
+            {/* Large Category Watermark in Background */}
+            <div className="absolute -bottom-10 -right-10 text-[90px] md:text-[110px] font-black tracking-tighter opacity-[0.03] select-none pointer-events-none uppercase leading-none text-white">
+              {event.type}
+            </div>
 
-            {/* Employee Name: 48px Bold */}
-            <h1 className="text-3xl md:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white leading-tight font-display">
-              {event.name}
-            </h1>
+            {/* Header row */}
+            <div className="flex justify-between items-center text-[9px] font-mono uppercase tracking-[0.25em] text-slate-500 border-b pb-2" style={{ borderColor: currentTheme.cardBorder }}>
+              <span>{companyName}</span>
+              <span>{event.date}</span>
+            </div>
 
-            {/* Subtle department */}
-            <p className="text-[10px] font-medium opacity-50 uppercase tracking-widest text-slate-400">
-              {event.department || 'Platform Engineering Core'}
-            </p>
+            {/* Asymmetrical Frame & Details Row */}
+            <div className="flex-1 flex flex-col justify-center space-y-4 my-2">
+              {/* Off-center Portrait */}
+              <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-lg overflow-hidden border border-white/20 shadow-xl bg-zinc-950 shrink-0">
+                {event.image ? (
+                  <img 
+                    src={event.image} 
+                    alt={event.name} 
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div 
+                    className="w-full h-full flex items-center justify-center font-extrabold text-2xl text-slate-400 bg-zinc-900"
+                  >
+                    {initials}
+                  </div>
+                )}
+                {/* Minimal Overlay Badge */}
+                <div 
+                  className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-widest uppercase text-black"
+                  style={{ backgroundColor: customAccent }}
+                >
+                  {event.type === 'award' ? 'HONOR' : event.type === 'anniversary' ? 'ANNIV' : event.type === 'promotion' ? 'PROM' : 'TEAM'}
+                </div>
+              </div>
+
+              {/* Left-Aligned Bold Typography */}
+              <div className="space-y-1">
+                <h1 className="text-2xl md:text-3xl font-black font-display text-white leading-tight uppercase tracking-tight">
+                  {event.name}
+                </h1>
+                <div className="flex flex-wrap items-center gap-x-2 text-[10px] uppercase font-bold tracking-wider">
+                  <span style={{ color: customAccent }}>{event.designation}</span>
+                  <span className="text-slate-600">•</span>
+                  <span className="text-slate-400">{event.department}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Elegant Minimal Message */}
+            <div className="border-t pt-3" style={{ borderColor: currentTheme.cardBorder }}>
+              {!hideMessage && (
+                <p className="text-[11px] leading-relaxed text-slate-300 font-light mb-2">
+                  "{event.customMessage || event.achievement}"
+                </p>
+              )}
+              <div className="w-6 h-1 rounded" style={{ backgroundColor: customAccent }} />
+            </div>
           </div>
-
-          {/* Divider line & Emotional Message Description: 24px default but responsive inside constraints */}
-          {!hideMessage && (
-            <>
-              <div 
-                className="w-12 h-[2.5px] mx-auto rounded-full shadow" 
-                style={{ backgroundColor: customAccent }}
-              />
-              <p className="text-xs md:text-sm lg:text-[14px] leading-relaxed text-slate-300 font-light max-w-sm mx-auto select-none">
-                "{event.customMessage || event.achievement}"
-              </p>
-            </>
-          )}
-        </div>
-
+        )}
       </div>
     </div>
   );
 }
 
 // ==========================================
-// ELEGANT CANVAS-BASED FLOATING GOLD DUST
+// ELEGANT CANVAS-BASED FLOATING EVENT-THEMED CELEBRATION OBJECTS
 // ==========================================
 interface CanvasProps {
-  eventId: string;
+  event: CelebrationEvent;
   customAccent: string;
+  particlesEnabled?: boolean;
+  balloonsEnabled?: boolean;
+  artifactsEnabled?: boolean;
 }
 
-function GoldDustCanvas({ eventId, customAccent }: CanvasProps) {
+interface CelebrationObject {
+  x: number;
+  y: number;
+  size: number;
+  vy: number;
+  swaySpeed: number;
+  swayRange: number;
+  swayOffset: number;
+  color: string;
+  type: 'balloon' | 'star' | 'rocket' | 'trophy' | 'cupcake' | 'heart' | 'welcome_bubble' | 'lantern' | 'milestone_shield' | 'crown' | 'arrow_up';
+  yearsText?: string;
+  angle: number;
+  angularVelocity: number;
+  opacity: number;
+}
+
+function GoldDustCanvas({ 
+  event, 
+  customAccent,
+  particlesEnabled = true,
+  balloonsEnabled = true,
+  artifactsEnabled = true
+}: CanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -1970,17 +2397,113 @@ function GoldDustCanvas({ eventId, customAccent }: CanvasProps) {
     }
 
     const particles: DustParticle[] = [];
-    for (let i = 0; i < 45; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * 2 + 0.6,
-        vy: -Math.random() * 0.45 - 0.15,
-        vx: (Math.random() - 0.5) * 0.25,
-        alpha: Math.random() * 0.7 + 0.1,
-        fadeRate: Math.random() * 0.003 + 0.001,
-        sway: Math.random() * Math.PI * 2
-      });
+    if (particlesEnabled) {
+      for (let i = 0; i < 45; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: Math.random() * 2 + 0.6,
+          vy: -Math.random() * 0.45 - 0.15,
+          vx: (Math.random() - 0.5) * 0.25,
+          alpha: Math.random() * 0.7 + 0.1,
+          fadeRate: Math.random() * 0.003 + 0.001,
+          sway: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    // Dynamic Context-Aware Celebration Objects Pool
+    const celebrationObjects: CelebrationObject[] = [];
+    if (balloonsEnabled || artifactsEnabled) {
+      const type = event.type || 'award';
+      let colors: string[] = [];
+      let availableTypes: CelebrationObject['type'][] = [];
+      
+      if (type === 'birthday') {
+        colors = ['#ef4444', '#f43f5e', '#ec4899', '#f59e0b', '#3b82f6', '#10b981', '#a78bfa'];
+        availableTypes = [];
+        if (balloonsEnabled) availableTypes.push('balloon');
+        if (artifactsEnabled) availableTypes.push('cupcake', 'heart', 'star');
+        if (availableTypes.length === 0) availableTypes.push('star');
+      } else if (type === 'anniversary') {
+        colors = ['#FFD700', '#F59E0B', '#a78bfa', '#ec4899', '#f43f5e', '#ffffff'];
+        availableTypes = [];
+        if (balloonsEnabled) availableTypes.push('balloon');
+        if (artifactsEnabled) availableTypes.push('milestone_shield', 'heart', 'star');
+        if (availableTypes.length === 0) availableTypes.push('star');
+      } else if (type === 'promotion') {
+        colors = ['#10b981', '#34d399', '#38bdf8', '#3b82f6', '#FFD700', '#F59E0B'];
+        availableTypes = [];
+        if (balloonsEnabled) availableTypes.push('balloon');
+        if (artifactsEnabled) availableTypes.push('rocket', 'arrow_up', 'star');
+        if (availableTypes.length === 0) availableTypes.push('star');
+      } else if (type === 'award') {
+        colors = ['#FFD700', '#F59E0B', '#ffffff', '#38bdf8', '#a78bfa'];
+        availableTypes = [];
+        if (balloonsEnabled) availableTypes.push('balloon');
+        if (artifactsEnabled) availableTypes.push('trophy', 'crown', 'star');
+        if (availableTypes.length === 0) availableTypes.push('star');
+      } else if (type === 'new_joiner') {
+        colors = ['#3b82f6', '#10b981', '#38bdf8', '#a78bfa', '#f59e0b'];
+        availableTypes = [];
+        if (balloonsEnabled) availableTypes.push('welcome_bubble', 'balloon');
+        if (artifactsEnabled) availableTypes.push('star', 'heart');
+        if (availableTypes.length === 0) availableTypes.push('star');
+      } else if (type === 'festival') {
+        colors = ['#ef4444', '#f59e0b', '#fbbf24', '#ec4899', '#10b981'];
+        availableTypes = [];
+        if (balloonsEnabled) availableTypes.push('balloon');
+        if (artifactsEnabled) availableTypes.push('lantern', 'star');
+        if (availableTypes.length === 0) availableTypes.push('star');
+      } else {
+        colors = ['#FFD700', '#ffffff', '#38bdf8', '#f43f5e'];
+        availableTypes = [];
+        if (balloonsEnabled) availableTypes.push('balloon');
+        if (artifactsEnabled) availableTypes.push('star');
+        if (availableTypes.length === 0) availableTypes.push('star');
+      }
+
+      // Spawn 12 responsive slow floating celebration objects
+      const count = 12;
+      for (let i = 0; i < count; i++) {
+        const objType = availableTypes[i % availableTypes.length];
+        
+        let size = Math.random() * 5 + 9;
+        let vy = -Math.random() * 0.45 - 0.25; 
+        
+        if (objType === 'balloon') {
+          size = Math.random() * 6 + 11;
+          vy = -Math.random() * 0.5 - 0.35;
+        } else if (objType === 'rocket') {
+          size = Math.random() * 5 + 10;
+          vy = -Math.random() * 0.85 - 0.55; 
+        } else if (objType === 'trophy' || objType === 'crown') {
+          size = Math.random() * 4 + 10;
+          vy = -Math.random() * 0.35 - 0.2; 
+        } else if (objType === 'arrow_up') {
+          size = Math.random() * 4 + 8;
+          vy = -Math.random() * 0.7 - 0.4;
+        } else if (objType === 'lantern') {
+          size = Math.random() * 5 + 12;
+          vy = -Math.random() * 0.35 - 0.15; 
+        }
+
+        celebrationObjects.push({
+          x: Math.random() * width,
+          y: Math.random() * height * 1.5 + height * 0.1,
+          size: size,
+          vy: vy,
+          swaySpeed: Math.random() * 0.01 + 0.005,
+          swayRange: Math.random() * 12 + 6,
+          swayOffset: Math.random() * Math.PI * 2,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          type: objType,
+          yearsText: event.years ? String(event.years) : undefined,
+          angle: Math.random() * Math.PI * 2,
+          angularVelocity: (Math.random() - 0.5) * 0.035,
+          opacity: Math.random() * 0.35 + 0.5
+        });
+      }
     }
 
     // Interactive Star and Diamond burst particles
@@ -2056,40 +2579,398 @@ function GoldDustCanvas({ eventId, customAccent }: CanvasProps) {
     }
     window.addEventListener('celebration-trigger', handleCelebrateEvent);
 
+    // High fidelity drawing methods
+    const drawBalloon = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string, offset: number) => {
+      c.save();
+      const gradient = c.createRadialGradient(x - s * 0.3, y - s * 0.3, s * 0.1, x, y, s);
+      gradient.addColorStop(0, '#ffffff80');
+      gradient.addColorStop(0.2, color);
+      gradient.addColorStop(1, '#00000060');
+
+      c.fillStyle = gradient;
+      c.beginPath();
+      c.ellipse(x, y, s * 0.85, s * 1.1, 0, 0, Math.PI * 2);
+      c.fill();
+
+      // Tie
+      c.fillStyle = color;
+      c.beginPath();
+      c.moveTo(x, y + s * 1.1);
+      c.lineTo(x - 3, y + s * 1.1 + 5);
+      c.lineTo(x + 3, y + s * 1.1 + 5);
+      c.closePath();
+      c.fill();
+
+      // String
+      c.beginPath();
+      c.moveTo(x, y + s * 1.1 + 5);
+      const swayStr = Math.sin(offset * 2) * 4;
+      c.bezierCurveTo(x + swayStr, y + s * 1.1 + 15, x - swayStr, y + s * 1.1 + 30, x, y + s * 1.1 + 45);
+      c.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+      c.lineWidth = 1;
+      c.stroke();
+      c.restore();
+    };
+
+    const drawStarObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string, rot: number) => {
+      c.save();
+      c.translate(x, y);
+      c.rotate(rot);
+      c.fillStyle = color;
+      c.shadowColor = color;
+      c.shadowBlur = 4;
+      c.beginPath();
+      for (let j = 0; j < 5; j++) {
+        c.lineTo(Math.cos(((18 + j * 72) * Math.PI) / 180) * s, Math.sin(((18 + j * 72) * Math.PI) / 180) * s);
+        c.lineTo(Math.cos(((54 + j * 72) * Math.PI) / 180) * (s * 0.4), Math.sin(((54 + j * 72) * Math.PI) / 180) * (s * 0.4));
+      }
+      c.closePath();
+      c.fill();
+      c.restore();
+    };
+
+    const drawRocketObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string) => {
+      c.save();
+      c.translate(x, y);
+      
+      const flameH = s * 0.45 * (Math.random() * 0.5 + 0.8);
+      const flameGrad = c.createLinearGradient(0, s * 0.4, 0, s * 0.4 + flameH);
+      flameGrad.addColorStop(0, '#f97316');
+      flameGrad.addColorStop(0.5, '#ef4444');
+      flameGrad.addColorStop(1, 'transparent');
+      c.fillStyle = flameGrad;
+      c.beginPath();
+      c.moveTo(-s * 0.15, s * 0.4);
+      c.lineTo(0, s * 0.4 + flameH);
+      c.lineTo(s * 0.15, s * 0.4);
+      c.closePath();
+      c.fill();
+
+      c.fillStyle = color;
+      c.beginPath();
+      c.moveTo(0, -s * 0.6);
+      c.quadraticCurveTo(s * 0.25, -s * 0.1, s * 0.22, s * 0.4);
+      c.lineTo(-s * 0.22, s * 0.4);
+      c.quadraticCurveTo(-s * 0.25, -s * 0.1, 0, -s * 0.6);
+      c.closePath();
+      c.fill();
+      
+      c.fillStyle = '#ef4444';
+      c.beginPath();
+      c.moveTo(-s * 0.2, s * 0.1);
+      c.lineTo(-s * 0.42, s * 0.4);
+      c.lineTo(-s * 0.2, s * 0.4);
+      c.closePath();
+      c.fill();
+      
+      c.beginPath();
+      c.moveTo(s * 0.2, s * 0.1);
+      c.lineTo(s * 0.42, s * 0.4);
+      c.lineTo(s * 0.2, s * 0.4);
+      c.closePath();
+      c.fill();
+
+      c.fillStyle = '#38bdf8';
+      c.beginPath();
+      c.arc(0, -s * 0.1, s * 0.1, 0, Math.PI * 2);
+      c.fill();
+      c.restore();
+    };
+
+    const drawArrowUpObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string) => {
+      c.save();
+      c.translate(x, y);
+      c.strokeStyle = color;
+      c.lineWidth = s * 0.22;
+      c.lineCap = 'round';
+      c.lineJoin = 'round';
+      
+      c.beginPath();
+      c.moveTo(-s * 0.5, s * 0.1);
+      c.lineTo(0, -s * 0.4);
+      c.lineTo(s * 0.5, s * 0.1);
+      c.stroke();
+
+      c.beginPath();
+      c.moveTo(-s * 0.5, s * 0.5);
+      c.lineTo(0, 0);
+      c.lineTo(s * 0.5, s * 0.5);
+      c.stroke();
+      c.restore();
+    };
+
+    const drawTrophyObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string) => {
+      c.save();
+      c.fillStyle = color;
+      c.strokeStyle = color;
+      c.lineWidth = s * 0.08;
+      c.translate(x, y);
+      
+      c.beginPath();
+      c.arc(0, -s * 0.25, s * 0.35, 0, Math.PI, false);
+      c.lineTo(0, 0);
+      c.closePath();
+      c.fill();
+      
+      c.beginPath();
+      c.arc(-s * 0.38, -s * 0.25, s * 0.18, Math.PI * 0.5, Math.PI * 1.5, false);
+      c.stroke();
+      
+      c.beginPath();
+      c.arc(s * 0.38, -s * 0.25, s * 0.18, Math.PI * 1.5, Math.PI * 0.5, false);
+      c.stroke();
+      
+      c.fillRect(-s * 0.07, 0, s * 0.14, s * 0.25);
+      c.fillRect(-s * 0.26, s * 0.25, s * 0.52, s * 0.12);
+      c.restore();
+    };
+
+    const drawCrownObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string) => {
+      c.save();
+      c.translate(x, y);
+      c.fillStyle = color;
+      
+      c.beginPath();
+      c.moveTo(-s * 0.5, s * 0.35);
+      c.lineTo(-s * 0.5, -s * 0.15);
+      c.lineTo(-s * 0.25, s * 0.1);
+      c.lineTo(0, -s * 0.4);
+      c.lineTo(s * 0.25, s * 0.1);
+      c.lineTo(s * 0.5, -s * 0.15);
+      c.lineTo(s * 0.5, s * 0.35);
+      c.closePath();
+      c.fill();
+      
+      c.fillStyle = 'rgba(255, 255, 255, 0.3)';
+      c.fillRect(-s * 0.5, s * 0.24, s, s * 0.08);
+      
+      c.fillStyle = '#ffffff';
+      c.beginPath();
+      c.arc(-s * 0.5, -s * 0.18, s * 0.07, 0, Math.PI * 2);
+      c.arc(0, -s * 0.44, s * 0.07, 0, Math.PI * 2);
+      c.arc(s * 0.5, -s * 0.18, s * 0.07, 0, Math.PI * 2);
+      c.fill();
+      c.restore();
+    };
+
+    const drawCupcakeObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number) => {
+      c.save();
+      c.translate(x, y);
+      
+      c.fillStyle = '#f472b6';
+      c.beginPath();
+      c.moveTo(-s * 0.35, s * 0.35);
+      c.lineTo(s * 0.35, s * 0.35);
+      c.lineTo(s * 0.45, 0);
+      c.lineTo(-s * 0.45, 0);
+      c.closePath();
+      c.fill();
+      
+      c.strokeStyle = '#db2777';
+      c.lineWidth = 1.2;
+      for (let offset = -0.3; offset <= 0.3; offset += 0.2) {
+        c.beginPath();
+        c.moveTo(s * offset, s * 0.35);
+        c.lineTo(s * offset * 1.2, 0);
+        c.stroke();
+      }
+      
+      c.fillStyle = '#ffffff';
+      c.beginPath();
+      c.arc(-s * 0.22, -s * 0.08, s * 0.22, 0, Math.PI * 2);
+      c.arc(s * 0.22, -s * 0.08, s * 0.22, 0, Math.PI * 2);
+      c.arc(0, -s * 0.2, s * 0.26, 0, Math.PI * 2);
+      c.fill();
+      
+      c.fillStyle = '#dc2626';
+      c.beginPath();
+      c.arc(0, -s * 0.44, s * 0.11, 0, Math.PI * 2);
+      c.fill();
+      c.restore();
+    };
+
+    const drawHeartObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string) => {
+      c.save();
+      c.translate(x, y);
+      c.fillStyle = color;
+      c.beginPath();
+      c.moveTo(0, s * 0.45);
+      c.bezierCurveTo(-s * 0.6, -s * 0.1, -s * 0.6, -s * 0.7, 0, -s * 0.4);
+      c.bezierCurveTo(s * 0.6, -s * 0.7, s * 0.6, -s * 0.1, 0, s * 0.45);
+      c.closePath();
+      c.fill();
+      c.restore();
+    };
+
+    const drawWelcomeBubbleObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string) => {
+      c.save();
+      c.translate(x, y);
+      
+      c.fillStyle = color;
+      c.beginPath();
+      c.arc(0, -s * 0.1, s * 0.5, 0, Math.PI * 2);
+      c.fill();
+      
+      c.beginPath();
+      c.moveTo(-s * 0.1, s * 0.4);
+      c.lineTo(-s * 0.35, s * 0.62);
+      c.lineTo(-s * 0.3, s * 0.32);
+      c.closePath();
+      c.fill();
+      
+      c.fillStyle = '#ffffff';
+      c.font = `bold ${s * 0.28}px sans-serif`;
+      c.textAlign = 'center';
+      c.textBaseline = 'middle';
+      c.fillText("HI!", 0, -s * 0.1);
+      c.restore();
+    };
+
+    const drawMilestoneShieldObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string, years?: string) => {
+      c.save();
+      c.translate(x, y);
+      
+      c.fillStyle = color;
+      c.strokeStyle = '#ffffff';
+      c.lineWidth = 1.2;
+      c.beginPath();
+      c.moveTo(0, -s * 0.55);
+      c.lineTo(s * 0.45, -s * 0.25);
+      c.lineTo(s * 0.45, s * 0.2);
+      c.quadraticCurveTo(s * 0.45, s * 0.55, 0, s * 0.8);
+      c.quadraticCurveTo(-s * 0.45, s * 0.55, -s * 0.45, s * 0.2);
+      c.lineTo(-s * 0.45, -s * 0.25);
+      c.closePath();
+      c.fill();
+      c.stroke();
+      
+      if (years) {
+        c.fillStyle = '#000000';
+        c.font = `bold ${s * 0.48}px monospace`;
+        c.textAlign = 'center';
+        c.textBaseline = 'middle';
+        c.fillText(years, 0, 0);
+      } else {
+        c.fillStyle = '#ffffff';
+        c.beginPath();
+        for (let j = 0; j < 5; j++) {
+          c.lineTo(Math.cos(((18 + j * 72) * Math.PI) / 180) * (s * 0.24), Math.sin(((18 + j * 72) * Math.PI) / 180) * (s * 0.24));
+          c.lineTo(Math.cos(((54 + j * 72) * Math.PI) / 180) * (s * 0.1), Math.sin(((54 + j * 72) * Math.PI) / 180) * (s * 0.1));
+        }
+        c.closePath();
+        c.fill();
+      }
+      c.restore();
+    };
+
+    const drawLanternObj = (c: CanvasRenderingContext2D, x: number, y: number, s: number, color: string) => {
+      c.save();
+      c.translate(x, y);
+      
+      c.fillStyle = '#b45309';
+      c.fillRect(-s * 0.35, -s * 0.55, s * 0.7, s * 0.1);
+      c.fillRect(-s * 0.35, s * 0.45, s * 0.7, s * 0.1);
+      
+      c.fillStyle = color;
+      c.beginPath();
+      c.ellipse(0, 0, s * 0.42, s * 0.48, 0, 0, Math.PI * 2);
+      c.fill();
+      
+      c.strokeStyle = 'rgba(0, 0, 0, 0.25)';
+      c.lineWidth = 1.2;
+      c.beginPath();
+      c.moveTo(0, -s * 0.48);
+      c.lineTo(0, s * 0.48);
+      c.stroke();
+      
+      c.strokeStyle = '#ef4444';
+      c.lineWidth = 1.8;
+      c.beginPath();
+      c.moveTo(0, s * 0.55);
+      c.lineTo(0, s * 0.88);
+      c.stroke();
+      c.restore();
+    };
+
     let animFrameId: number;
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
 
       // Render static background slow gold dust
-      particles.forEach((p) => {
-        p.alpha -= p.fadeRate;
-        if (p.alpha <= 0) {
-          // Respawn at bottom
-          p.alpha = Math.random() * 0.7 + 0.1;
-          p.y = height + 10;
-          p.x = Math.random() * width;
-        }
+      if (particlesEnabled) {
+        particles.forEach((p) => {
+          p.alpha -= p.fadeRate;
+          if (p.alpha <= 0) {
+            p.alpha = Math.random() * 0.7 + 0.1;
+            p.y = height + 10;
+            p.x = Math.random() * width;
+          }
 
-        p.sway += 0.01;
-        p.x += Math.sin(p.sway) * 0.15 + p.vx;
-        p.y += p.vy;
+          p.sway += 0.01;
+          p.x += Math.sin(p.sway) * 0.15 + p.vx;
+          p.y += p.vy;
 
-        ctx.save();
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = customAccent;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.fillStyle = customAccent;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        });
+      }
+
+      // Render floating custom celebration objects
+      if (balloonsEnabled || artifactsEnabled) {
+        celebrationObjects.forEach((obj) => {
+          obj.y += obj.vy;
+          obj.swayOffset += obj.swaySpeed;
+          obj.angle += obj.angularVelocity;
+          const currentX = obj.x + Math.sin(obj.swayOffset) * obj.swayRange;
+          
+          if (obj.y < -35) {
+            obj.y = height + 35;
+            obj.x = Math.random() * width;
+          }
+
+          ctx.save();
+          ctx.globalAlpha = obj.opacity;
+
+          if (obj.type === 'balloon') {
+            drawBalloon(ctx, currentX, obj.y, obj.size, obj.color, obj.swayOffset);
+          } else if (obj.type === 'star') {
+            drawStarObj(ctx, currentX, obj.y, obj.size, obj.color, obj.angle);
+          } else if (obj.type === 'rocket') {
+            drawRocketObj(ctx, currentX, obj.y, obj.size, obj.color);
+          } else if (obj.type === 'arrow_up') {
+            drawArrowUpObj(ctx, currentX, obj.y, obj.size, obj.color);
+          } else if (obj.type === 'trophy') {
+            drawTrophyObj(ctx, currentX, obj.y, obj.size, obj.color);
+          } else if (obj.type === 'crown') {
+            drawCrownObj(ctx, currentX, obj.y, obj.size, obj.color);
+          } else if (obj.type === 'cupcake') {
+            drawCupcakeObj(ctx, currentX, obj.y, obj.size);
+          } else if (obj.type === 'heart') {
+            drawHeartObj(ctx, currentX, obj.y, obj.size, obj.color);
+          } else if (obj.type === 'welcome_bubble') {
+            drawWelcomeBubbleObj(ctx, currentX, obj.y, obj.size, obj.color);
+          } else if (obj.type === 'milestone_shield') {
+            drawMilestoneShieldObj(ctx, currentX, obj.y, obj.size, obj.color, obj.yearsText);
+          } else if (obj.type === 'lantern') {
+            drawLanternObj(ctx, currentX, obj.y, obj.size, obj.color);
+          }
+
+          ctx.restore();
+        });
+      }
 
       // Update & Draw burst particles
       for (let i = burstParticles.length - 1; i >= 0; i--) {
         const bp = burstParticles[i];
         bp.x += bp.vx;
         bp.y += bp.vy;
-        bp.vy += 0.06; // subtle gravity
-        bp.vx *= 0.98; // friction
+        bp.vy += 0.06; 
+        bp.vx *= 0.98; 
         bp.alpha -= bp.fadeRate;
         bp.rotation += bp.rotationSpeed;
 
@@ -2105,7 +2986,6 @@ function GoldDustCanvas({ eventId, customAccent }: CanvasProps) {
         ctx.fillStyle = bp.color;
 
         if (bp.isStar) {
-          // Draw a luxury star
           ctx.beginPath();
           for (let j = 0; j < 5; j++) {
             ctx.lineTo(Math.cos(((18 + j * 72) * Math.PI) / 180) * bp.size, Math.sin(((18 + j * 72) * Math.PI) / 180) * bp.size);
@@ -2114,7 +2994,6 @@ function GoldDustCanvas({ eventId, customAccent }: CanvasProps) {
           ctx.closePath();
           ctx.fill();
         } else {
-          // Draw a small shining diamond
           ctx.beginPath();
           ctx.moveTo(0, -bp.size);
           ctx.lineTo(bp.size * 0.7, 0);
@@ -2139,12 +3018,12 @@ function GoldDustCanvas({ eventId, customAccent }: CanvasProps) {
       }
       cancelAnimationFrame(animFrameId);
     };
-  }, [eventId, customAccent]);
+  }, [event.id, event.type, event.years, customAccent, particlesEnabled, balloonsEnabled, artifactsEnabled]);
 
   return (
     <canvas 
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-0 opacity-80"
+      className="absolute inset-0 pointer-events-none z-0 opacity-85"
     />
   );
 }
