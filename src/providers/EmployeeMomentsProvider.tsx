@@ -48,9 +48,12 @@ export const EmployeeMomentsProvider: React.FC<EmployeeMomentsProviderProps> = (
 
 export function useEmployeeMoments(): EmployeeMomentsContextType {
   const context = useContext(EmployeeMomentsContext);
-  const isReducedMotion = useReducedMotion();
 
   if (!context) {
+    const isReducedMotionStatic = typeof window !== 'undefined' 
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches 
+      : false;
+
     // Return safe fallbacks if the component is used outside the provider
     return {
       themeName: 'corporate' as ThemeName,
@@ -59,7 +62,7 @@ export function useEmployeeMoments(): EmployeeMomentsContextType {
       t: (key: string, variables?: Record<string, string | number>) => getTranslation('en', key, variables),
       effects: ['confetti'],
       allowReactions: true,
-      reducedMotion: isReducedMotion,
+      reducedMotion: isReducedMotionStatic,
     };
   }
   return context;

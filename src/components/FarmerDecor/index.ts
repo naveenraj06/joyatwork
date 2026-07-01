@@ -1,1 +1,0 @@
-export { FarmerDecor } from './FarmerDecor';

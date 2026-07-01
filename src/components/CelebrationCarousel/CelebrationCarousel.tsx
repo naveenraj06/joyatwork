@@ -196,14 +196,13 @@ const CelebrationCarouselInner: React.FC<CelebrationCarouselProps & { mappedEven
 };
 
 export const CelebrationCarousel: React.FC<CelebrationCarouselProps> = (props) => {
-  const { events, theme, branding, effects, allowReactions, locale, activeIndex, onReaction, onActiveIndexChange, ...rest } = props;
+  const { events, people, theme, branding, effects, allowReactions, locale, activeIndex, onReaction, onActiveIndexChange, ...rest } = props;
 
   // Fully support people prop for backward compatibility
   const mappedEvents = useMemo(() => {
     if (events && events.length > 0) {
       return events;
     }
-    const people = (props as any).people;
     if (people && Array.isArray(people)) {
       return people.map((person, index) => ({
         id: person.id || `bday-${index}`,
@@ -218,7 +217,7 @@ export const CelebrationCarousel: React.FC<CelebrationCarouselProps> = (props) =
       }));
     }
     return [];
-  }, [events, (props as any).people]);
+  }, [events, people]);
 
   // Wrap inside nested provider to allow local overrides of theme, branding, and locale
   return (

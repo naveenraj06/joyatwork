@@ -57,8 +57,22 @@ export interface EmployeeMomentsProviderProps {
   onReaction?: (eventId: string, emoji: string) => void;
 }
 
+export interface LegacyPerson {
+  id?: string;
+  name: string;
+  designation?: string;
+  department?: string;
+  image?: string;
+  company?: string;
+  date?: string;
+  birthday?: string;
+  customMessage?: string;
+  message?: string;
+}
+
 export interface CelebrationCarouselProps {
-  events: CelebrationEvent[];
+  events?: CelebrationEvent[];
+  people?: LegacyPerson[];
   theme?: ThemeName;
   branding?: BrandingConfig;
   effects?: EffectType[];

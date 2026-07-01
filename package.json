@@ -1,10 +1,29 @@
 {
-  "name": "JoyAtWork",
-  "version": "1.0.0",
+  "name": "employee-moments-sdk",
+  "version": "3.0.0",
   "description": "High-fidelity employee celebrations, anniversaries, and moments card system with cross-framework Web Component wrappers.",
   "main": "./dist/react/index.umd.cjs",
   "module": "./dist/react/index.js",
   "types": "./dist/types/index.d.ts",
+  "license": "MIT",
+  "author": "Naveen Rajiv <naveenrajiv.06@gmail.com>",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naveenrajiv/employee-moments-sdk.git"
+  },
+  "keywords": [
+    "employee-recognition",
+    "celebrations",
+    "react-components",
+    "web-components"
+  ],
+  "sideEffects": [
+    "*.css",
+    "**/web-components.js"
+  ],
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
@@ -12,57 +31,71 @@
       "require": "./dist/react/index.umd.cjs"
     },
     "./web-components": {
-      "import": "./dist/react/index.js",
-      "require": "./dist/react/index.umd.cjs"
+      "types": "./dist/types/web-components.d.ts",
+      "import": "./dist/react/web-components.js",
+      "require": "./dist/react/web-components.umd.cjs"
     },
     "./wc-standalone": {
       "import": "./dist/wc/index.umd.cjs"
     },
-    "./style.css": "./dist/react/index.css"
+    "./style.css": "./dist/react/index.css",
+    "./dist/react/index.css": "./dist/react/index.css"
   },
   "files": [
-    "dist/react",
-    "dist/wc",
-    "dist/types"
+    "dist"
   ],
   "scripts": {
-    "dev": "vite --port=3000 --host=0.0.0.0",
+    "dev": "storybook dev -p 3000 --host 0.0.0.0",
     "build": "vite build",
     "build:react": "vite build --config vite.config.sdk.ts",
     "build:wc": "vite build --config vite.config.sdk.ts --mode wc",
-    "build:types": "tsc --declaration --emitDeclarationOnly --outDir dist/types --noEmit false",
+    "build:types": "tsc --project tsconfig.build.json",
     "build:all": "npm run clean && npm run build && npm run build:react && npm run build:wc && npm run build:types",
     "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit"
+    "clean": "rimraf dist server.js",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build:all",
+    "storybook": "storybook dev -p 3000 --host 0.0.0.0",
+    "build-storybook": "storybook build"
   },
   "peerDependencies": {
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^0.546.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
-  "dependencies": {
+  "devDependencies": {
     "@google/genai": "^2.4.0",
     "@tailwindcss/vite": "^4.1.14",
-    "@vitejs/plugin-react": "^5.0.4",
-    "canvas-confetti": "^1.9.4",
-    "clsx": "^2.1.1",
-    "dotenv": "^17.2.3",
-    "express": "^4.21.2",
-    "lucide-react": "^0.546.0",
-    "motion": "^12.23.24",
-    "react": "^19.0.1",
-    "react-dom": "^19.0.1",
-    "vite": "^6.2.3"
-  },
-  "devDependencies": {
     "@types/canvas-confetti": "^1.9.0",
     "@types/express": "^4.17.21",
     "@types/node": "^22.14.0",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^5.0.4",
     "autoprefixer": "^10.4.21",
+    "canvas-confetti": "^1.9.4",
+    "dotenv": "^17.2.3",
     "esbuild": "^0.25.0",
+    "express": "^4.21.2",
+    "lucide-react": "^0.546.0",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "rimraf": "^6.1.3",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
-    "vite": "^6.2.3"
+    "vite": "^6.2.3",
+    "storybook": "^10.4.6",
+    "@storybook/react-vite": "^10.4.6",
+    "@chromatic-com/storybook": "^5.2.1",
+    "@storybook/addon-vitest": "^10.4.6",
+    "@storybook/addon-a11y": "^10.4.6",
+    "@storybook/addon-docs": "^10.4.6",
+    "@storybook/addon-mcp": "^0.6.0",
+    "vitest": "^4.1.9",
+    "playwright": "^1.61.1",
+    "@vitest/browser-playwright": "^4.1.9",
+    "@vitest/coverage-v8": "^4.1.9"
   }
 }

@@ -1,0 +1,29 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist/types",
+    "noEmit": false,
+    "allowImportingTsExtensions": false
+  },
+  "include": [
+    "src/index.ts",
+    "src/web-components.tsx",
+    "src/types/**/*",
+    "src/components/**/*",
+    "src/effects/**/*",
+    "src/hooks/**/*",
+    "src/providers/**/*",
+    "src/locales/**/*",
+    "src/themes/**/*",
+    "src/utils/eventHelpers.ts"
+  ],
+  "exclude": [
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/utils/dummyData.ts",
+    "node_modules",
+    "dist"
+  ]
+}

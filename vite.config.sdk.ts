@@ -14,9 +14,9 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: isWebComponent ? 'dist/wc' : 'dist/react',
       emptyOutDir: true,
-      sourcemap: false,
+      sourcemap: true,
       lib: {
-        entry: path.resolve(__dirname, 'src/index.ts'),
+        entry: path.resolve(__dirname, isWebComponent ? 'src/web-components.tsx' : 'src/index.ts'),
         name: 'EmployeeMoments',
         fileName: (format) => `index.${format === 'es' ? 'js' : 'umd.cjs'}`,
         formats: isWebComponent ? ['umd'] : ['es', 'umd']
@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         // Externalize react, react-dom, and other heavy dependencies ONLY for the standard React bundle.
         // For the standalone Web Component (wc) bundle, we bundle them in for drop-in convenience.
-        external: isWebComponent ? [] : ['react', 'react-dom', 'react-dom/client', 'lucide-react', 'motion', 'motion/react', 'canvas-confetti'],
+        external: isWebComponent ? [] : ['react', 'react-dom', 'react-dom/client', 'lucide-react', 'canvas-confetti'],
         output: {
           globals: isWebComponent 
             ? {} 
@@ -33,13 +33,12 @@ export default defineConfig(({ mode }) => {
                 'react-dom': 'ReactDOM',
                 'react-dom/client': 'ReactDOMClient',
                 'lucide-react': 'LucideReact',
-                'motion': 'Motion',
-                'motion/react': 'Motion',
                 'canvas-confetti': 'confetti'
               },
           assetFileNames: (assetInfo) => {
-            if (assetInfo.name === 'style.css') return 'index.css';
-            return assetInfo.name || '';
+            const name = assetInfo.name;
+            if (name && name.endsWith('.css')) return 'index.css';
+            return name || '[name].[ext]';
           }
         }
       }

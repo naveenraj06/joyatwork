@@ -6,6 +6,8 @@ import { CelebrationCard } from './components/CelebrationCard';
 import { EmployeeMomentsProvider } from './providers/EmployeeMomentsProvider';
 import { CelebrationEvent, ThemeName, EffectType } from './types';
 
+const SafeHTMLElement = typeof HTMLElement !== 'undefined' ? HTMLElement : (class {} as typeof HTMLElement);
+
 // Helper to parse JSON attributes safely
 function parseJsonAttribute<T>(attrValue: string | null, fallback: T): T {
   if (!attrValue) return fallback;
@@ -23,7 +25,7 @@ function parseJsonAttribute<T>(attrValue: string | null, fallback: T): T {
 /**
  * <employee-moments-carousel>
  */
-export class EmployeeMomentsCarouselElement extends HTMLElement {
+export class EmployeeMomentsCarouselElement extends SafeHTMLElement {
   private _root: any = null;
   private _container: HTMLDivElement | null = null;
   private _events: CelebrationEvent[] = [];
@@ -179,7 +181,7 @@ export class EmployeeMomentsCarouselElement extends HTMLElement {
 /**
  * <employee-moments-wall>
  */
-export class EmployeeMomentsWallElement extends HTMLElement {
+export class EmployeeMomentsWallElement extends SafeHTMLElement {
   private _root: any = null;
   private _container: HTMLDivElement | null = null;
   private _events: CelebrationEvent[] = [];
@@ -309,7 +311,7 @@ export class EmployeeMomentsWallElement extends HTMLElement {
 /**
  * <employee-moments-card>
  */
-export class EmployeeMomentsCardElement extends HTMLElement {
+export class EmployeeMomentsCardElement extends SafeHTMLElement {
   private _root: any = null;
   private _container: HTMLDivElement | null = null;
   private _event: CelebrationEvent | null = null;

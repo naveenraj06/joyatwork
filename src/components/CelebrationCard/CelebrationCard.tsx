@@ -1,37 +1,12 @@
 import React, { useMemo } from 'react';
 import { CelebrationCardProps, EventType } from '../../types';
 import { useEmployeeMoments } from '../../providers/EmployeeMomentsProvider';
+import { useEventMessages } from '../../hooks/useEventMessages';
 import { ReactionBar } from '../ReactionBar';
 import { EffectsController } from '../../effects/EffectsController';
 import { FloatingReactions } from '../FloatingReactions';
-import {
-  Cake,
-  Award,
-  TrendingUp,
-  Trophy,
-  UserPlus,
-  Sparkles,
-  Building2,
-  Calendar,
-} from 'lucide-react';
-
-const EVENT_ICONS: Record<EventType, React.ComponentType<{ className?: string }>> = {
-  birthday: Cake,
-  anniversary: Award,
-  promotion: TrendingUp,
-  award: Trophy,
-  new_joiner: UserPlus,
-  festival: Sparkles,
-};
-
-const EVENT_COLORS: Record<EventType, { bg: string; text: string; border: string }> = {
-  birthday: { bg: 'bg-pink-500/10 dark:bg-pink-500/20', text: 'text-pink-600 dark:text-pink-400', border: 'border-pink-500/25' },
-  anniversary: { bg: 'bg-blue-500/10 dark:bg-blue-500/20', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-500/25' },
-  promotion: { bg: 'bg-emerald-500/10 dark:bg-emerald-500/20', text: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-500/25' },
-  award: { bg: 'bg-amber-500/10 dark:bg-amber-500/20', text: 'text-amber-600 dark:text-amber-400', border: 'border-amber-500/25' },
-  new_joiner: { bg: 'bg-indigo-500/10 dark:bg-indigo-500/20', text: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-500/25' },
-  festival: { bg: 'bg-red-500/10 dark:bg-red-500/20', text: 'text-red-600 dark:text-red-400', border: 'border-red-500/25' },
-};
+import { Building2, Calendar, Sparkles } from 'lucide-react';
+import { EVENT_ICONS, EVENT_COLORS } from '../../utils/eventHelpers';
 
 export const CelebrationCard: React.FC<CelebrationCardProps> = React.memo(({
   event,
@@ -76,22 +51,7 @@ export const CelebrationCard: React.FC<CelebrationCardProps> = React.memo(({
   }, [theme.textSecondary]);
 
   // Dynamic translated title and subtitle
-  const { title, subtitle } = useMemo(() => {
-    const type = event.type;
-    const name = event.name;
-    const years = event.years ?? 0;
-    const designation = event.designation ?? '';
-    const department = event.department ?? '';
-    const achievement = event.achievement ?? '';
-
-    const titleText = t(type, { name, years, designation, department, achievement });
-    const subText = t(`${type}_sub`, { name, years, designation, department, achievement });
-
-    return {
-      title: titleText,
-      subtitle: event.customMessage || subText,
-    };
-  }, [event, t]);
+  const { title, subtitle } = useEventMessages(event);
 
   const IconComponent = EVENT_ICONS[event.type] || Sparkles;
   const colors = EVENT_COLORS[event.type] || EVENT_COLORS.festival;
@@ -114,6 +74,7 @@ export const CelebrationCard: React.FC<CelebrationCardProps> = React.memo(({
             className="relative w-28 h-28 md:w-32 md:h-32 rounded-full object-cover border-4 shadow-xl z-10 transition-transform duration-300 group-hover:scale-105"
             style={{ borderColor: theme.cardBackground }}
             loading="lazy"
+            referrerPolicy="no-referrer"
           />
         </div>
       );

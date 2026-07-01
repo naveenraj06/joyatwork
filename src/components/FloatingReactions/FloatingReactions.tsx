@@ -22,7 +22,6 @@ export const FloatingReactions: React.FC<{ eventId?: string }> = ({ eventId }) =
       const customEv = e as CustomEvent<{ emoji: string; eventId?: string }>;
       
       const triggeredEventId = customEv.detail?.eventId;
-      console.log('FloatingReactions handleTrigger: triggeredEventId =', triggeredEventId, 'current eventId =', eventId, 'emoji =', customEv.detail?.emoji);
       
       // If both eventIds are specified, check if they match to avoid spilling reactions into other cards
       if (eventId && triggeredEventId && triggeredEventId !== eventId) {

@@ -1,4 +1,24 @@
+import React from 'react';
 import { CelebrationEvent, EventType, EffectType } from '../types';
+import { Cake, Award, TrendingUp, Trophy, UserPlus, Sparkles } from 'lucide-react';
+
+export const EVENT_ICONS: Record<EventType, React.ComponentType<{ className?: string }>> = {
+  birthday: Cake,
+  anniversary: Award,
+  promotion: TrendingUp,
+  award: Trophy,
+  new_joiner: UserPlus,
+  festival: Sparkles,
+};
+
+export const EVENT_COLORS: Record<EventType, { bg: string; text: string; border: string; glow: string }> = {
+  birthday: { bg: 'bg-pink-500/10 dark:bg-pink-500/20', text: 'text-pink-600 dark:text-pink-400', border: 'border-pink-500/25', glow: 'shadow-pink-500/20' },
+  anniversary: { bg: 'bg-blue-500/10 dark:bg-blue-500/20', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-500/25', glow: 'shadow-blue-500/20' },
+  promotion: { bg: 'bg-emerald-500/10 dark:bg-emerald-500/20', text: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-500/25', glow: 'shadow-emerald-500/20' },
+  award: { bg: 'bg-amber-500/10 dark:bg-amber-500/20', text: 'text-amber-600 dark:text-amber-400', border: 'border-amber-500/25', glow: 'shadow-amber-500/20' },
+  new_joiner: { bg: 'bg-indigo-500/10 dark:bg-indigo-500/20', text: 'text-indigo-600 dark:text-indigo-400', border: 'border-indigo-500/25', glow: 'shadow-indigo-500/20' },
+  festival: { bg: 'bg-red-500/10 dark:bg-red-500/20', text: 'text-red-600 dark:text-red-400', border: 'border-red-500/25', glow: 'shadow-red-500/20' },
+};
 
 export interface EventMetadata {
   icon: string;
